@@ -2,7 +2,8 @@
 
 MqttManager::MqttManager(
     WiFiManager &w,
-    ConfigManager &c) : wifi(w), config(c), mqtt(espClient) {}
+    ConfigManager &c,
+    RTCManager &t) : wifi(w), config(c), time(t), mqtt(espClient) {}
 
 void MqttManager::begin()
 {
@@ -57,16 +58,11 @@ void MqttManager::publish(String uid, String name)
     if (!mqtt.connected())
         return;
 
-    struct tm t;
-    getLocalTime(&t);
-    char bufTime[25];
-    strftime(bufTime, sizeof(bufTime), "%Y-%m-%d %H:%M:%S", &t);
-
     JsonDocument doc;
     doc["device_id"] = clientID();
     doc["nama"] = name;
     doc["uid"] = uid;
-    doc["waktu"] = String(bufTime);
+    doc["waktu"] = time.nowTimestamp();
 
     char buffer[256];
     serializeJson(doc, buffer);

@@ -1,16 +1,17 @@
 #pragma once
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
-#include <time.h>
 #include "wifi_manager.h"
 #include "config_manager.h"
+#include "rtc_manager.h"
 
 class MqttManager
 {
 public:
     MqttManager(
         WiFiManager &wifi,
-        ConfigManager &config);
+        ConfigManager &config,
+        RTCManager &time);
 
     void begin();
     void loop();
@@ -22,6 +23,7 @@ public:
 private:
     WiFiManager &wifi;
     ConfigManager &config;
+    RTCManager &time;
 
     WiFiClient espClient;
     PubSubClient mqtt;

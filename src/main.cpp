@@ -5,6 +5,7 @@
 #include "rfid_manager.h"
 #include "serial_manager.h"
 #include "user_db.h"
+#include "rtc_manager.h"
 #include "wifi_manager.h"
 #include "mqtt_manager.h"
 #include "telegram_notifier.h"
@@ -16,8 +17,9 @@ RelayController door(PIN_RELAY);
 RFIDManager rfid(PIN_SS, PIN_RST);
 UserDatabase userdb;
 SerialManager ser(config, rfid, userdb);
+RTCManager time;
 WiFiManager wifi(config);
-MqttManager mqtt(wifi, config);
+MqttManager mqtt(wifi, config, time);
 TelegramNotifier telegram(BOT_TOKEN, ADMIN_CHAT_ID);
 
 void setup()
@@ -28,6 +30,7 @@ void setup()
 	rfid.begin();
 	userdb.begin();
 	ser.begin();
+	time.begin();
 	wifi.begin();
 	mqtt.begin();
 	telegram.begin();
