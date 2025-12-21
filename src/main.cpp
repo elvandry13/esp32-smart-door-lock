@@ -22,6 +22,7 @@ TelegramNotifier telegram(BOT_TOKEN, ADMIN_CHAT_ID);
 
 void setup()
 {
+	config.loadConfig();
 	display.begin();
 	door.begin();
 	rfid.begin();
@@ -31,6 +32,7 @@ void setup()
 	mqtt.begin();
 	telegram.begin();
 	display.show("Silakan scan", "kartu / tag");
+	Serial.println("ClientID : " + mqtt.getClientID());
 }
 
 void loop()
@@ -38,7 +40,7 @@ void loop()
 	ser.loop();
 	wifi.loop();
 	mqtt.loop();
-
+	
 	String uid, name;
 	if (rfid.scan(uid))
 	{

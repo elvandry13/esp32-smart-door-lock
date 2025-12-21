@@ -14,7 +14,7 @@ String MqttManager::clientID()
 {
     uint64_t mac = ESP.getEfuseMac();
     char id[32];
-    sprintf(id, "smartplug_%04X%08X",
+    sprintf(id, "smartdoorlock_%04X%08X",
             (uint16_t)(mac >> 32),
             (uint32_t)mac);
     return String(id);
