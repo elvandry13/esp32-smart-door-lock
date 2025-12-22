@@ -11,7 +11,7 @@ public:
     MqttManager(
         WiFiManager &wifi,
         ConfigManager &config,
-        RTCManager &time);
+        RTCManager &rtc);
 
     void begin();
     void loop();
@@ -23,7 +23,7 @@ public:
 private:
     WiFiManager &wifi;
     ConfigManager &config;
-    RTCManager &time;
+    RTCManager &rtc;
 
     WiFiClient espClient;
     PubSubClient mqtt;

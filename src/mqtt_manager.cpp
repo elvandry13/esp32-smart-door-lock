@@ -3,7 +3,7 @@
 MqttManager::MqttManager(
     WiFiManager &w,
     ConfigManager &c,
-    RTCManager &t) : wifi(w), config(c), time(t), mqtt(espClient) {}
+    RTCManager &t) : wifi(w), config(c), rtc(t), mqtt(espClient) {}
 
 void MqttManager::begin()
 {
@@ -62,7 +62,7 @@ void MqttManager::publish(String uid, String name)
     doc["device_id"] = clientID();
     doc["nama"] = name;
     doc["uid"] = uid;
-    doc["waktu"] = time.nowTimestamp();
+    doc["waktu"] = rtc.nowTimestamp();
 
     char buffer[256];
     serializeJson(doc, buffer);

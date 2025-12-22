@@ -17,9 +17,9 @@ RelayController door(PIN_RELAY);
 RFIDManager rfid(PIN_SS, PIN_RST);
 UserDatabase userdb;
 SerialManager ser(config, rfid, userdb);
-RTCManager time;
+RTCManager rtc;
 WiFiManager wifi(config);
-MqttManager mqtt(wifi, config, time);
+MqttManager mqtt(wifi, config, rtc);
 TelegramNotifier telegram(BOT_TOKEN, ADMIN_CHAT_ID);
 
 void setup()
@@ -30,7 +30,7 @@ void setup()
 	rfid.begin();
 	userdb.begin();
 	ser.begin();
-	time.begin();
+	rtc.begin();
 	wifi.begin();
 	mqtt.begin();
 	telegram.begin();
