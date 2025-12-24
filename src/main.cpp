@@ -2,6 +2,7 @@
 #include "config_manager.h"
 #include "display_manager.h"
 #include "relay_controller.h"
+#include "push_button.h"
 #include "rfid_manager.h"
 #include "serial_manager.h"
 #include "user_db.h"
@@ -14,6 +15,7 @@
 ConfigManager config;
 DisplayManager display;
 RelayController door(PIN_RELAY);
+PushButton button(PIN_BUTTON);
 RFIDManager rfid(PIN_SS, PIN_RST);
 UserDatabase userdb;
 SerialManager ser(config, rfid, userdb);
@@ -27,6 +29,7 @@ void setup()
 	config.loadConfig();
 	display.begin();
 	door.begin();
+	button.begin();
 	rfid.begin();
 	userdb.begin();
 	ser.begin();
@@ -60,5 +63,10 @@ void loop()
 			delay(2000);
 		}
 		display.show("Silakan scan", "kartu / tag");
+	}
+
+	if (button.isPressed())
+	{
+		door.unlock();
 	}
 }
